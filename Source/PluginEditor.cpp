@@ -21,10 +21,12 @@ LowShelfFilterAudioProcessorEditor::LowShelfFilterAudioProcessorEditor(
     lowShelfSlider.setVelocityModeParameters(1.0, 1, 0.1, true);
     lowShelfSlider.setSkewFactor(1.0);
 
-    // Match custom arc: 45 deg -> 135 deg (bottom arc)
+    // Arc: 0 at 7 o'clock (120 deg), 100 at 5 o'clock (60 deg)
+    // In JUCE: start = 60 deg (5 o'clock), end = 120 deg (7 o'clock)
+    // Clockwise from 60 to 120 passes through 90 (6 o'clock) = bottom arc
     lowShelfSlider.setRotaryParameters(
-        juce::MathConstants<float>::pi / 4.0f,
-        juce::MathConstants<float>::pi * 3.0f / 4.0f,
+        juce::MathConstants<float>::pi / 3.0f,          // 60 deg (5 o'clock)
+        juce::MathConstants<float>::pi * 2.0f / 3.0f,  // 120 deg (7 o'clock)
         true);
 
     lowShelfSlider.setTooltip("Low Shelf Filter Amount (0-100%)");
@@ -61,7 +63,7 @@ LowShelfFilterAudioProcessorEditor::LowShelfFilterAudioProcessorEditor(
     addAndMakeVisible(unitLabel);
 
     //========================================================================
-    // Window
+    // Window Setup
     //========================================================================
     setSize(360, 360);
     setResizable(false, false);

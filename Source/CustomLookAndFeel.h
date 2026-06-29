@@ -4,20 +4,15 @@
 
 //==============================================================================
 /**
- * Custom LookAndFeel for a rotary knob based on SVG reference.
+ * Custom LookAndFeel for a rotary knob based on the reference SVG.
  *
- * SVG Reference:
- *   - Canvas: 95.25mm x 95.25mm, white background
- *   - Arc: dark red stroke (#782121), ~5.29mm thick, rounded caps
- *   - Arc geometry: elliptical, radius ~23.8mm, lower portion
- *
- * Implementation Spec:
- *   - Background: 360 x 360 px, white
- *   - Effective arc: 200 x 174 px
- *   - Arc span: ~5 o'clock to ~7 o'clock (bottom arc via 6 o'clock)
- *   - Gradient: Green (0) -> Yellow (mid) -> Red (100)
- *   - Rounded line caps (stroke-linecap: round)
- *   - Interactive radial slider, standard VST feel
+ * Design spec from SVG:
+ *   - Background: white (#FFFFFF)
+ *   - Arc track: grey (#999999), thick stroke with rounded caps
+ *   - Filled arc: Green (#2ca02c) -> Yellow (#ffd42a) -> Red (#c83737)
+ *   - Arc span: 0 at 7 o'clock, 100 at 5 o'clock (bottom arc via 6 o'clock)
+ *   - Thumb: circular handle on the arc for dragging
+ *   - Arc size: 200 x 174 px effective area
  */
 class CustomLookAndFeel : public juce::LookAndFeel_V4
 {
@@ -46,7 +41,6 @@ public:
     void setBackgroundColour(juce::Colour colour);
     void setTrackColour(juce::Colour colour);
     void setThumbSize(float radius);
-    void setGradientColours(juce::Colour low, juce::Colour mid, juce::Colour high);
 
 private:
     //============================================================================
@@ -64,7 +58,6 @@ private:
                        float sliderPos) const;
 
     void drawThumb(juce::Graphics& g,
-                   const juce::Point<float>& centre,
                    const juce::Rectangle<float>& arcBounds,
                    float angle, float sliderPos) const;
 
@@ -75,18 +68,18 @@ private:
     //============================================================================
     // Members
     //============================================================================
-    float arcThickness  = 6.0f;
+    float arcThickness  = 10.0f;   // Thicker arc matching SVG reference
     float arcWidth      = 200.0f;
     float arcHeight     = 174.0f;
-    float thumbRadius   = 8.0f;
+    float thumbRadius   = 14.0f;   // Prominent circular drag handle
 
     juce::Colour backgroundColour   = juce::Colours::white;
-    juce::Colour trackColour        = juce::Colour(0xFFE0E0E0);
-    juce::Colour thumbBorderColour  = juce::Colours::white;
+    juce::Colour trackColour        = juce::Colour(0xFF999999);  // Grey from SVG
 
-    juce::Colour gradientLow  = juce::Colour(0xFF22C55E);  // Green
-    juce::Colour gradientMid  = juce::Colour(0xFFEAB308);  // Yellow
-    juce::Colour gradientHigh = juce::Colour(0xFFEF4444);  // Red
+    // Gradient colours from SVG reference
+    juce::Colour gradientLow  = juce::Colour(0xFF2ca02c);  // Green
+    juce::Colour gradientMid  = juce::Colour(0xFFffd42a);  // Yellow
+    juce::Colour gradientHigh = juce::Colour(0xFFc83737);  // Red
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(CustomLookAndFeel)
 };
