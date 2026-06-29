@@ -1,13 +1,14 @@
 #pragma once
 
-#include <JuceHeader.h>
+#include <juce_audio_processors/juce_audio_processors.h>
+#include <juce_dsp/juce_dsp.h>
 
 //==============================================================================
 /**
  * Low Shelf Filter VST3 Audio Processor.
  *
  * DSP: IIR low-shelf filter at 100 Hz.
- *   0%  -> flat (0 dB)
+ *   0%  -> 0 dB (flat)
  *   100% -> -12 dB cut
  */
 class LowShelfFilterAudioProcessor  : public juce::AudioProcessor
