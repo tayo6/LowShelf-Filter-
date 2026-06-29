@@ -17,17 +17,16 @@ jobs:
         with:
           submodules: recursive
 
-      - name: Setup MSVC
-        uses: ilammy/msvc-dev-cmd@v1
-
       - name: Configure CMake
+        shell: cmd
         run: |
-          cmake -B build `
-            -G "Visual Studio 17 2022" `
-            -A x64 `
+          cmake -B build ^
+            -G "Visual Studio 17 2022" ^
+            -A x64 ^
             -DCMAKE_BUILD_TYPE=Release
 
       - name: Build VST3
+        shell: cmd
         run: cmake --build build --config Release --target LowShelfFilter_VST3
 
       - name: Upload Artifact
