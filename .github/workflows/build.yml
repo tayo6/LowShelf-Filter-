@@ -17,12 +17,18 @@ jobs:
         with:
           submodules: recursive
 
-      - name: Configure CMake
+      - name: Setup MSVC
+        uses: ilammy/msvc-dev-cmd@v1
+        with:
+          arch: x64
+
+      - name: Configure CMake (Ninja)
         shell: cmd
         run: |
           cmake -B build ^
-            -G "Visual Studio 17 2022" ^
-            -A x64 ^
+            -G "Ninja Multi-Config" ^
+            -DCMAKE_C_COMPILER=cl ^
+            -DCMAKE_CXX_COMPILER=cl ^
             -DCMAKE_BUILD_TYPE=Release
 
       - name: Build VST3
